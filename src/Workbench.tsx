@@ -1,7 +1,7 @@
-import React, { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState, type ChangeEvent } from "react";
 import {
   buildRows, cellEditKey, collectIssues, columnKey, emptyProject, ensureFields,
-  isMissing, mergeFiles, normalizeHeader, text, validProject,
+  mergeFiles, normalizeHeader, text, validProject,
 } from "./lib/data";
 import { downloadBlob, parseWorkbooks, readDirectory, workbookBytes } from "./lib/excel";
 import { loadLocal, saveLocal } from "./lib/storage";
@@ -148,7 +148,7 @@ export default function Workbench() {
     }
   }
 
-  function handleFileInput(event: React.ChangeEvent<HTMLInputElement>, fromFolder: boolean) {
+  function handleFileInput(event: ChangeEvent<HTMLInputElement>, fromFolder: boolean) {
     const entries = Array.from(event.target.files || []).map((file) => ({
       path: fromFolder ? (file as File & { webkitRelativePath?: string }).webkitRelativePath || file.name : file.name,
       file,
@@ -326,7 +326,7 @@ export default function Workbench() {
     setNotice("Project file downloaded. It includes imported data, mappings, and edits.");
   }
 
-  async function openProjectFile(event: React.ChangeEvent<HTMLInputElement>) {
+  async function openProjectFile(event: ChangeEvent<HTMLInputElement>) {
     const file = event.target.files?.[0];
     event.target.value = "";
     if (!file) return;
